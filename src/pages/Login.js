@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Form, Input, Button, Checkbox, Card,message} from 'antd';
+import {Form, Input, Button, Checkbox, Card, message} from 'antd';
+import {UserOutlined, LockOutlined} from '@ant-design/icons';
 import {setToken} from '../utils/auth';
 import {loginApi} from '../service/auth';
 import '../pages/login.css'
@@ -14,11 +15,11 @@ class Login extends Component {
             password: values.password
         }).then(res => {
             console.log(res);
-            if(res.code==='success'){
+            if (res.code === 'success') {
                 message.success("登陆成功");
                 setToken(res.token);
                 this.props.history.push('/admin');
-            }else{
+            } else {
                 message.info(res.message);
             }
         }).catch(err => {
@@ -37,12 +38,6 @@ class Login extends Component {
             <Card title="ADSS" className="login-form">
                 <Form
                     name="basic"
-                    labelCol={{
-                        span: 8,
-                    }}
-                    wrapperCol={{
-                        span: 16,
-                    }}
                     initialValues={{
                         remember: true,
                     }}
@@ -60,7 +55,7 @@ class Login extends Component {
                             },
                         ]}
                     >
-                        <Input placeholder="账号"/>
+                        <Input prefix={<UserOutlined className="site-form-item-icon"/>} placeholder="账号"/>
                     </Form.Item>
 
                     <Form.Item
@@ -73,27 +68,25 @@ class Login extends Component {
                             },
                         ]}
                     >
-                        <Input.Password placeholder="密码"/>
+                        <Input.Password prefix={<LockOutlined className="site-form-item-icon"/>} placeholder="密码"/>
                     </Form.Item>
+                    <Form.Item>
+                        <Form.Item name="remember" valuePropName="checked"  style={{ float:"left",width:"50%"}}>
+                            <Checkbox>记住</Checkbox>
+                        </Form.Item>
 
-                    <Form.Item
-                        name="remember"
-                        valuePropName="checked"
-                        wrapperCol={{
-                            offset: 8,
-                            span: 16,
-                        }}
-                    >
-                        <Checkbox>记住</Checkbox>
+                        <a className="login-form-forgot" href="#/error" style={{ float:"right",width:"45%"}}>
+                            忘记密码?
+                        </a>
                     </Form.Item>
 
                     <Form.Item
                         wrapperCol={{
-                            offset: 8,
-                            span: 16,
+                            offset: 10,
+                            span: 5,
                         }}
                     >
-                        <Button type="primary" htmlType="submit">
+                        <Button type="primary" shape="round" htmlType="submit" className="login-form-button">
                             登录
                         </Button>
                     </Form.Item>
