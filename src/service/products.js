@@ -5,7 +5,7 @@ import {get, post, put, del} from '../utils/request';
  * @param page
  */
 export function listApi(page = 1) {
-    return get("/api/v1/admin/products", {page});
+    return get("/api/v1/admin/products/get", {page});
 }
 
 /**
@@ -13,7 +13,7 @@ export function listApi(page = 1) {
  * @param data
  */
 export function createApi(data) {
-    return get("/api/v1/admin/products", data);
+    return get("/api/v1/admin/products/add", data);
 }
 
 /**

@@ -1,20 +1,7 @@
 import React, {Component} from 'react';
-import {Button, Card, Table, Popconfirm} from 'antd';
+import {Button, Card, Table, Popconfirm, message} from 'antd';
 import {listApi} from '../../../service/products';
 
-const dataSource = [{
-    id: 1,
-    name: '香皂',
-    price: 5
-}, {
-    id: 2,
-    name: '特仑苏',
-    price: 6
-}, {
-    id: 3,
-    name: '小浣熊',
-    price: 1.5
-}]
 const columns = [{
     title: '序号',
     key: 'id',
@@ -33,16 +20,37 @@ const columns = [{
         return (
             <div>
                 <Button type="primary" size="small">修改</Button>
-                <Popconfirm title="确定删除此项?"
-                            onCancel={() => console.log('用户取消删除')}
-                            onConfirm={() => console.log('用户确认删除')
-                                //此处调用api接口进行相关操作
-                            }>
+                <Popconfirm
+                    title="确定删除此项?"
+                    onConfirm={() => {
+                        message.success('用户确认删除', 1)
+                    }}
+                    onCancel={() => {
+                        message.error('用户取消删除', 1)
+                    }}
+                    okText="确认"
+                    cancelText="取消"
+                    //此处调用api接口进行相关操作
+                >
                     <Button style={{margin: "0 1rem"}} type="danger" size="small">删除</Button>
                 </Popconfirm>
             </div>)
     }
 }]
+
+let dataSource = [];
+
+listApi(4).then(res => {
+    if (res.success === true) {
+        dataSource = res.result;
+        message.success(res.msg, 1);
+    } else {
+        message.info(res.message, 1);
+    }
+}).catch(err => {
+    console.log(err);
+    message.error("查询失败!", 1);
+});
 
 class List extends Component {
     constructor(props) {
@@ -56,7 +64,8 @@ class List extends Component {
                 extra={
                     <Button type="primary" size="small" onClick={() => this.props.history.push('/admin/products/edit')}>
                         新增
-                    </Button>}>
+                    </Button>
+                }>
                 <Table rowKey="id" columns={columns} bordered dataSource={dataSource}/>
             </Card>
         );

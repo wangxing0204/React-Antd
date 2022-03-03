@@ -15,16 +15,16 @@ class Login extends Component {
             password: values.password
         }).then(res => {
             console.log(res);
-            if (res.code === 'success') {
-                message.success("登陆成功");
+            if (res.success === true) {
+                message.success(res.msg,1);
                 setToken(res.token);
                 this.props.history.push('/admin');
             } else {
-                message.info(res.message);
+                message.info(res.message,1);
             }
         }).catch(err => {
             console.log(err);
-            message.error("用户不存在");
+            message.error("用户不存在",1);
         });
 
     };

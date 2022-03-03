@@ -2,8 +2,8 @@ import axios from "axios";
 import {getToken} from './auth';
 
 const instance = axios.create({
-    baseURL: 'http://localhost:3009',
-    timeout: 500
+    baseURL: 'http://localhost:8080',
+    timeout: 3000
 })
 
 //全局请求拦截,发送请求之前执行
