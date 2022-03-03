@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Card, Table, Popconfirm, message} from 'antd';
-import {listApi} from '../../../service/products';
+import {getOneApi, listApi} from '../../../service/products';
+
 
 const columns = [{
     title: '序号',
@@ -38,26 +39,36 @@ const columns = [{
     }
 }]
 
-let dataSource = [];
-
-listApi(4).then(res => {
-    if (res.success === true) {
-        dataSource = res.result;
-        message.success(res.msg, 1);
-    } else {
-        message.info(res.message, 1);
-    }
-}).catch(err => {
-    console.log(err);
-    message.error("查询失败!", 1);
-});
 
 class List extends Component {
     constructor(props) {
         super(props);
     }
 
+    state = {
+        dataSource: [],
+    }
+
+    loadData = () => {
+        listApi(4).then(res => {
+            if (res.success === true) {
+                this.setState({dataSource: res.result});
+                message.success(res.msg, 1);
+            } else {
+                message.info(res.message, 1);
+            }
+        }).catch(err => {
+            console.log(err);
+            message.error("查询失败!", 1);
+        });
+    }
+
+    componentDidMount() {
+        this.loadData();
+    }
+
     render() {
+
         return (
             <Card
                 title="商品列表"
@@ -66,7 +77,7 @@ class List extends Component {
                         新增
                     </Button>
                 }>
-                <Table rowKey="id" columns={columns} bordered dataSource={dataSource}/>
+                <Table rowKey="id" columns={columns} bordered dataSource={this.state.dataSource}/>
             </Card>
         );
     }

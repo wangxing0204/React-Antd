@@ -17,6 +17,14 @@ export function createApi(data) {
 }
 
 /**
+ * 通过id获取单条数据
+ * @param id
+ */
+export function getOneApi(id) {
+    return get(`/api/v1/admin/products/get/${id}`);
+}
+
+/**
  * 修改
  * @param id
  * @param data
