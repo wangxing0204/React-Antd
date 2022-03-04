@@ -21,7 +21,7 @@ export function createApi(data) {
  * @param id
  */
 export function getOneApi(id) {
-    return get(`/api/v1/admin/products/get/${id}`);
+    return get(`/api/v1/admin/products/findPage/${id}`);
 }
 
 /**
