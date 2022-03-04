@@ -50,7 +50,7 @@ class List extends Component {
     }
 
     loadData = () => {
-        listApi(4).then(res => {
+        listApi().then(res => {
             if (res.success === true) {
                 this.setState({dataSource: res.result});
                 message.success(res.msg, 1);

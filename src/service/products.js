@@ -4,8 +4,8 @@ import {get, post, put, del} from '../utils/request';
  * 获取
  * @param page
  */
-export function listApi(page = 1) {
-    return get("/api/v1/admin/products/get", {page});
+export function listApi() {
+    return get("/api/v1/admin/products/findAll");
 }
 
 /**
